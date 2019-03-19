@@ -17,13 +17,13 @@ function getQuotes() {
   })
 }
 
-
 function createQuotes(data) {
   const ul = document.getElementById('quote-list');
   data.forEach((quote) => {
     //Create Elements
     const li = document.createElement('li');
     li.setAttribute('class', 'blockquote');
+    li.setAttribute('id', `li-${quote.id}`)
     const blockquote = document.createElement('blockquote');
     const p = document.createElement('p');
     p.setAttribute('class', 'mb-0');
@@ -34,6 +34,7 @@ function createQuotes(data) {
     const br = document.createElement('br');
     const likeButton = document.createElement('button');
     likeButton.setAttribute('class', 'btn-success');
+    likeButton.setAttribute('id', quote.id);
     likeButton.textContent = "Likes: "
     const span = document.createElement('span');
     span.textContent = quote.likes;
@@ -50,11 +51,19 @@ function createQuotes(data) {
     blockquote.appendChild(likeButton);
     likeButton.appendChild(span);
     blockquote.appendChild(deleteButton);
+
+    //Create Event Listeners
+    likeButton.addEventListener('click', () => {
+      likeQuote(quote);
+    })
+
+    deleteButton.addEventListener('click', () => {
+      deleteQuote(quote);
+    });
   });
 }
 
 function addQuote() {
-  console.log('clicked')
   const newQuote = document.getElementById('new-quote').value;
   const newAuthor = document.getElementById('author').value;
   const body = {
@@ -75,10 +84,38 @@ function addQuote() {
     return results.json()
   })
   .then(json => {
-    console.log('json', json)
-    jsonArray = [json];
-    createQuotes(jsonArray);
+    createQuotes([json]);
   })
+}
+
+function likeQuote(quote) {
+  const button = document.getElementById(`${quote.id}`);
+  const body = {
+    method: 'PATCH',
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      "likes": `${quote.likes++}`
+    })
+  }
+  
+  fetch(quotesURL + `/${quote.id}`, body)
+  .then(results => {
+    return results.json();
+  })
+  .then(json => {
+    button.textContent = (`Likes: ${json.likes}`)
+  })
+}
+
+function deleteQuote(quote) {
+  const ul = document.getElementById('quote-list');
+  const li = document.getElementById(`li-${quote.id}`);
+  ul.removeChild(li);
+
+  fetch(quotesURL + `/${quote.id}`, {method: 'DELETE'})
 }
 
 function handleNewQuote() {
