@@ -1,2 +1,9 @@
-// It might be a good idea to add event listener to make sure this file 
-// only runs after the DOM has finshed loading.
+window.addEventListener('load', main);
+
+async function main() {
+  let quotes = new Quotes();
+  await quotes.renderApp()
+
+  const newQuoteSubmitBtn = document.querySelector("#new-quote-form button");
+  newQuoteSubmitBtn.addEventListener('click', quotes.createNewQuote.bind(quotes));
+}
