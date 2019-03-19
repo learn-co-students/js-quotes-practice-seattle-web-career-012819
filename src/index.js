@@ -32,6 +32,7 @@ function createQuoteBlock(data){
   const successBtn = document.createElement('button')
     successBtn.classList.add('btn-success')
     successBtn.textContent = `Likes: ${data.likes}`
+    successBtn.setAttribute('likes', `${data.likes}`)
   const dangerBtn = document.createElement('button')
     dangerBtn.classList.add('btn-danger')
     dangerBtn.textContent = "Delete"
@@ -43,6 +44,8 @@ function createQuoteBlock(data){
   blockQuote.appendChild(dangerBtn)
 
   dangerBtn.addEventListener('click', deleteQuote)
+  successBtn.addEventListener('click', addLike)
+
   li.appendChild(blockQuote)
   ul.appendChild(li)
 }
@@ -75,7 +78,26 @@ function addNewQuote(e){
       })
   } //end of deleteQuote function
 
+  function addLike(e){
+    const quote = e.target.parentNode.parentNode
+    const id = quote.id
+    const currentLikes = e.target.getAttribute('likes')
+    const newLikes = parseInt(currentLikes) +1
+    e.target.textContent = `Likes: ${newLikes}`
+    e.target.setAttribute('likes', `${newLikes}`)
+    console.log(newLikes)
 
+    const patchBody = {
+      "likes": newLikes
+    }
+    fetch(`http://localhost:3000/quotes/${id}`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(patchBody)
+    })
+  }
 
   getQuotes();
 })// end of dom content loaded event listener
