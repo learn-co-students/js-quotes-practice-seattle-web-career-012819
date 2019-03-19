@@ -18,49 +18,7 @@ function getQuotes() {
 }
 
 function createQuotes(data) {
-  const ul = document.getElementById('quote-list');
-  data.forEach((quote) => {
-    //Create Elements
-    const li = document.createElement('li');
-    li.setAttribute('class', 'blockquote');
-    li.setAttribute('id', `li-${quote.id}`)
-    const blockquote = document.createElement('blockquote');
-    const p = document.createElement('p');
-    p.setAttribute('class', 'mb-0');
-    p.textContent = quote.quote;
-    const footer = document.createElement('footer');
-    footer.setAttribute('class', 'blockquote-footer');
-    footer.textContent = quote.author;
-    const br = document.createElement('br');
-    const likeButton = document.createElement('button');
-    likeButton.setAttribute('class', 'btn-success');
-    likeButton.setAttribute('id', quote.id);
-    likeButton.textContent = "Likes: "
-    const span = document.createElement('span');
-    span.textContent = quote.likes;
-    const deleteButton = document.createElement('button');
-    deleteButton.setAttribute('class', 'btn-danger');
-    deleteButton.textContent = 'Delete';
-
-    //Append Elements
-    ul.appendChild(li);
-    li.appendChild(blockquote);
-    blockquote.appendChild(p);
-    blockquote.appendChild(footer);
-    blockquote.appendChild(br);
-    blockquote.appendChild(likeButton);
-    likeButton.appendChild(span);
-    blockquote.appendChild(deleteButton);
-
-    //Create Event Listeners
-    likeButton.addEventListener('click', () => {
-      likeQuote(quote);
-    })
-
-    deleteButton.addEventListener('click', () => {
-      deleteQuote(quote);
-    });
-  });
+  createQuoteContent(data);
 }
 
 function addQuote() {
@@ -116,6 +74,52 @@ function deleteQuote(quote) {
   ul.removeChild(li);
 
   fetch(quotesURL + `/${quote.id}`, {method: 'DELETE'})
+}
+
+function createQuoteContent(data) {
+  const ul = document.getElementById('quote-list');
+  data.forEach((quote) => {
+    //Create Elements
+    const li = document.createElement('li');
+    li.setAttribute('class', 'blockquote');
+    li.setAttribute('id', `li-${quote.id}`)
+    const blockquote = document.createElement('blockquote');
+    const p = document.createElement('p');
+    p.setAttribute('class', 'mb-0');
+    p.textContent = quote.quote;
+    const footer = document.createElement('footer');
+    footer.setAttribute('class', 'blockquote-footer');
+    footer.textContent = quote.author;
+    const br = document.createElement('br');
+    const likeButton = document.createElement('button');
+    likeButton.setAttribute('class', 'btn-success');
+    likeButton.setAttribute('id', quote.id);
+    likeButton.textContent = "Likes: "
+    const span = document.createElement('span');
+    span.textContent = quote.likes;
+    const deleteButton = document.createElement('button');
+    deleteButton.setAttribute('class', 'btn-danger');
+    deleteButton.textContent = 'Delete';
+
+    //Append Elements
+    ul.appendChild(li);
+    li.appendChild(blockquote);
+    blockquote.appendChild(p);
+    blockquote.appendChild(footer);
+    blockquote.appendChild(br);
+    blockquote.appendChild(likeButton);
+    likeButton.appendChild(span);
+    blockquote.appendChild(deleteButton);
+
+    //Create Event Listeners
+    likeButton.addEventListener('click', () => {
+      likeQuote(quote);
+    })
+
+    deleteButton.addEventListener('click', () => {
+      deleteQuote(quote);
+    });
+  });
 }
 
 function handleNewQuote() {
