@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function createQuoteBlock(data){
   const li = document.createElement('li')
     li.classList.add("quote-card")
+    li.id = `${data.id}`
   const blockQuote = document.createElement('blockquote')
     blockQuote.classList.add("blockquote")
   const paragraph = document.createElement('p')
@@ -67,8 +68,12 @@ function addNewQuote(e){
 
   function deleteQuote(e){
     let quote = e.target.parentNode.parentNode
+    let id = quote.id
     quote.parentNode.removeChild(quote);
-  }
+    fetch(`http://localhost:3000/quotes/${id}`, {
+      method: 'DELETE'
+      })
+  } //end of deleteQuote function
 
 
 

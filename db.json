@@ -47,24 +47,6 @@
       "likes": 1,
       "author": "Me",
       "id": 8
-    },
-    {
-      "quote": "Learn to code sucker",
-      "likes": 1,
-      "author": "Professor T",
-      "id": 9
-    },
-    {
-      "quote": "Coding is fun",
-      "likes": 1,
-      "author": "Me",
-      "id": 10
-    },
-    {
-      "quote": "refresh the screen already",
-      "likes": 1,
-      "author": "overheard",
-      "id": 11
     }
   ]
 }
