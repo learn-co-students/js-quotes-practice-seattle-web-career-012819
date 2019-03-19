@@ -1,3 +1,21 @@
 #quote-list {
-  padding: 20px;
+	padding: 20px;
+}
+
+.btn-success {
+	margin: 2px;
+}
+
+.btn-danger {
+	justify-content: right;
+	margin: 2px;
+}
+
+.btn-success:hover {
+	box-shadow: 5px 7px;
+	background-color: lightgreen;
+}
+
+.btn-danger:hover {
+	background-color: pink;
 }
