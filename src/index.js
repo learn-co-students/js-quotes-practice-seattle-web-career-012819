@@ -3,6 +3,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const ul= document.getElementById("quote-list")
     const form = document.getElementById('new-quote-form')
+    form.addEventListener('submit', addNewQuote)
 
   function getQuotes(){
     fetch('http://localhost:3000/quotes')
@@ -40,6 +41,7 @@ function createQuoteBlock(data){
   blockQuote.appendChild(successBtn)
   blockQuote.appendChild(dangerBtn)
 
+  dangerBtn.addEventListener('click', deleteQuote)
   li.appendChild(blockQuote)
   ul.appendChild(li)
 }
@@ -53,7 +55,6 @@ function addNewQuote(e){
     "likes": 1,
     "author": `${authorInput.value}`
   }
-
   fetch('http://localhost:3000/quotes', {
     method: 'POST',
     headers: {
@@ -64,8 +65,11 @@ function addNewQuote(e){
     .then(json => createQuoteBlock(json))
   }// end of addNewQuote function
 
+  function deleteQuote(e){
+    let quote = e.target.parentNode.parentNode
+    quote.parentNode.removeChild(quote);
+  }
 
-  form.addEventListener('submit', addNewQuote)
 
 
   getQuotes();
