@@ -19,7 +19,7 @@ If you already have it installed, run the server by: `$ json-server --watch db.j
     </li>
   ```
 * Submitting the form creates a new quote and adds it to the list of quotes without having to refresh the page. (Whether you choose to optimistically render or not is up to you).
-* Clicking the delete button should delete the respective quote from the database and remove it from the page without having to refresh.
+* Clicking the delete button should delete the respective quote from the database and remove it from the page without having to refresh. (Read the docs for `json-server` at https://github.com/typicode/json-server to verify how it expects to receive `DELETE` requests)
 * Clicking the like button will increase the number of likes for this particular comment in the database and on the page without having to refresh.
 
 
